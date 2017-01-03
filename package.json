@@ -1,0 +1,43 @@
+{
+  "name": "make-conf",
+  "version": "0.1.0",
+  "description": "Merge environment variables into config object",
+  "main": "index.js",
+  "keywords": [
+    "config",
+    "env",
+    "environment",
+    "merge"
+  ],
+  "author": "Josh Swan <josh@sportifik.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joshswan/make-conf"
+  },
+  "bugs": {
+    "url": "https://github.com/joshswan/make-conf/issues"
+  },
+  "homepage": "https://github.com/joshswan/make-conf#readme",
+  "files": [
+    "index.js",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "lint": "eslint index.js",
+    "pretest": "npm run lint",
+    "test": "mocha --recursive test/*.js"
+  },
+  "dependencies": {
+    "camelcase": "^4.0.0",
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^3.12.2",
+    "eslint-config-airbnb-base": "^11.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "mocha": "^3.2.0"
+  }
+}
