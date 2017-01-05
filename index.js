@@ -6,7 +6,7 @@
  * https://github.com/joshswan/make-conf/blob/master/LICENSE
  */
 
-const camelCase = require('camelcase');
+const camelCase = require('lodash/camelCase');
 const get = require('lodash/get');
 const set = require('lodash/set');
 
