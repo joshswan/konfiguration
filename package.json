@@ -1,6 +1,6 @@
 {
   "name": "make-conf",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Merge environment variables into config object",
   "main": "index.js",
   "keywords": [
