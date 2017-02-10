@@ -1,4 +1,4 @@
-# React Native AutoLink
+# make-conf
 [![NPM Version][npm-image]][npm-url] [![Build Status][build-image]][build-url] [![Dependency Status][depstat-image]][depstat-url] [![Dev Dependency Status][devdepstat-image]][devdepstat-url]
 
 Config builder for Node projects. Merges environment variables with default config object(s) to produce simple config object and allows all config options to be overridable via environment variables.
