@@ -1,5 +1,6 @@
 cache: yarn
 language: node_js
 node_js:
-  - '6.9.2'
-  - '7.3.0'
+  - '6.12.3'
+  - '8.9.4'
+  - '9.4.0'

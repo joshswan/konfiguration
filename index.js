@@ -1,7 +1,7 @@
 /*!
  * make-conf
  *
- * Copyright 2017 Josh Swan
+ * Copyright 2017-2018 Josh Swan
  * Released under the MIT license
  * https://github.com/joshswan/make-conf/blob/master/LICENSE
  */
