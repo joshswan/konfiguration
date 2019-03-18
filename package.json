@@ -9,7 +9,7 @@
     "environment",
     "merge"
   ],
-  "author": "Josh Swan <josh@sportifik.com>",
+  "author": "Josh Swan <josh@disruptivelabs.io>",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -26,17 +26,16 @@
   ],
   "scripts": {
     "lint": "eslint index.js",
-    "pretest": "npm run lint",
     "test": "mocha --recursive test/*.js"
   },
   "dependencies": {
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
-    "eslint": "^3.12.2",
-    "eslint-config-airbnb-base": "^11.0.0",
-    "eslint-plugin-import": "^2.2.0",
-    "mocha": "^3.2.0"
+    "chai": "^4.2.0",
+    "eslint": "^5.15.3",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "mocha": "^6.0.2"
   }
 }
