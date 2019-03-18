@@ -6,8 +6,8 @@
  * https://github.com/joshswan/make-conf/blob/master/LICENSE
  */
 
-const { expect } = require('chai');
-const makeConf = require('../');
+import { expect } from 'chai';
+import makeConf from '..';
 
 beforeEach(() => {
   process.env = {};
@@ -20,7 +20,9 @@ describe('make-conf', () => {
   });
 
   it('should merge environment variables by default', () => {
-    const env = process.env = { app: 'makeConf' };
+    const env = { app: 'makeConf' };
+    process.env = env;
+
     const conf = makeConf({});
     expect(conf).to.deep.equal(env);
   });
@@ -52,7 +54,25 @@ describe('make-conf', () => {
   });
 
   it('should convert types of merged values based on existing ones', () => {
-    const conf = makeConf({ enabled: true, version: 1, name: 'makeConf', envs: ['test'] }, { enabled: '0', version: '3', name: 3.5, envs: ['dev'] });
-    expect(conf).to.deep.equal({ enabled: false, version: 3, name: '3.5', envs: ['dev'] });
+    const conf = makeConf(
+      {
+        enabled: true,
+        version: 1,
+        name: 'makeConf',
+        envs: ['test'],
+      },
+      {
+        enabled: '0',
+        version: '3',
+        name: 3.5,
+        envs: ['dev'],
+      },
+    );
+    expect(conf).to.deep.equal({
+      enabled: false,
+      version: 3,
+      name: '3.5',
+      envs: ['dev'],
+    });
   });
 });

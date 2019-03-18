@@ -6,9 +6,11 @@
  * https://github.com/joshswan/make-conf/blob/master/LICENSE
  */
 
-const camelCase = require('lodash/camelCase');
-const get = require('lodash/get');
-const set = require('lodash/set');
+import { camelCase, get, set } from 'lodash';
+
+interface Source {
+  [key: string]: any;
+}
 
 /**
  * Convert values to particular type
@@ -16,7 +18,7 @@ const set = require('lodash/set');
  * @param  {String} type  Type to convert to
  * @return {Mixed}        Converted value
  */
-function convert(value, type) {
+function convert(value: any, type: string): any {
   switch (type) {
     case 'boolean':
       return /^(?:true|1)$/i.test(value);
@@ -30,21 +32,12 @@ function convert(value, type) {
 }
 
 /**
- * Determine if value is an array
- * @param  {Mixed}   value Value to test
- * @return {Boolean}
- */
-function isArray(value) {
-  return Array.isArray(value);
-}
-
-/**
  * Determine if value is an object (and not an array)
  * @param  {Mixed}   value Value to test
  * @return {Boolean}
  */
-function isObject(value) {
-  return typeof value === 'object' && !isArray(value);
+function isObject(value: any): boolean {
+  return typeof value === 'object' && !Array.isArray(value);
 }
 
 /**
@@ -53,9 +46,9 @@ function isObject(value) {
  * @param  {Object} source      Object to merge into destination
  * @return {Object}             Merged object
  */
-function reduce(destination, source) {
+function reduce(destination: object, source: Source): object {
   // Reduce source object keys, using destination as initial value
-  return Object.keys(source).reduce((reduced, sourceKey) => {
+  return Object.keys(source).reduce((reduced: object, sourceKey: string) => {
     // Create config key
     const key = sourceKey
       // Remove non-word characters
@@ -93,7 +86,7 @@ function reduce(destination, source) {
  * @param  {Object} sources     One or more objects to merge in
  * @return {Object}             Merged config object
  */
-module.exports = (destination, ...sources) => {
+export default function makeConf(destination: object, ...sources: Source[]): object {
   // Add process.env to sources, if not included in sources
   if (process && process.env && !sources.includes(process.env)) {
     sources.push(process.env);
@@ -101,4 +94,4 @@ module.exports = (destination, ...sources) => {
 
   // Merge sources into destination
   return sources.reduce(reduce, destination);
-};
+}

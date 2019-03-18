@@ -20,22 +20,31 @@
   },
   "homepage": "https://github.com/joshswan/make-conf#readme",
   "files": [
-    "index.js",
+    "dist/",
     "LICENSE",
     "README.md"
   ],
   "scripts": {
-    "lint": "eslint index.js",
-    "test": "mocha --recursive test/*.js"
+    "build": "tsc",
+    "lint": "eslint src --ext .js,.ts && tsc --noEmit",
+    "test": "NODE_ENV=test mocha --require ts-node/register --recursive src/**/*.test.ts"
   },
   "dependencies": {
     "lodash": "^4.17.11"
   },
   "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/lodash": "^4.14.123",
+    "@types/mocha": "^5.2.6",
+    "@types/node": "^11.11.3",
+    "@typescript-eslint/eslint-plugin": "^1.4.2",
+    "@typescript-eslint/parser": "^1.4.2",
     "chai": "^4.2.0",
     "eslint": "^5.15.3",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
-    "mocha": "^6.0.2"
+    "mocha": "^6.0.2",
+    "ts-node": "^8.0.3",
+    "typescript": "^3.3.3333"
   }
 }
