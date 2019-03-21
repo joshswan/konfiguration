@@ -1,6 +1,6 @@
 # konfiguration
 
-[![NPM Version][npm-image]][npm-url] [![Build Status][build-image]][build-url] [![Dependency Status][depstat-image]][depstat-url] [![Dev Dependency Status][devdepstat-image]][devdepstat-url]
+[![NPM Version][npm-image]][npm-url] [![Build Status][build-image]][build-url] [![Coverage Status][coverage-image]][coverage-url] [![Dependency Status][depstat-image]][depstat-url] [![Dev Dependency Status][devdepstat-image]][devdepstat-url]
 
 Configuration package for Node projects. Define your default configuration settings in YAML files and easily override/extend them using environment-specific files as well as environment variables.
 
@@ -125,6 +125,8 @@ config.get('database.userName'); // returns 'test'
 
 [build-url]: https://travis-ci.org/joshswan/konfiguration
 [build-image]: https://travis-ci.org/joshswan/konfiguration.svg?branch=master
+[coverage-url]: https://coveralls.io/github/joshswan/konfiguration?branch=master
+[coverage-image]: https://coveralls.io/repos/github/joshswan/konfiguration/badge.svg?branch=master
 [depstat-url]: https://david-dm.org/joshswan/konfiguration
 [depstat-image]: https://david-dm.org/joshswan/konfiguration.svg
 [devdepstat-url]: https://david-dm.org/joshswan/konfiguration#info=devDependencies
