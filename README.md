@@ -1,41 +1,128 @@
 # make-conf
+
 [![NPM Version][npm-image]][npm-url] [![Build Status][build-image]][build-url] [![Dependency Status][depstat-image]][depstat-url] [![Dev Dependency Status][devdepstat-image]][devdepstat-url]
 
-Config builder for Node projects. Merges environment variables with default config object(s) to produce simple config object and allows all config options to be overridable via environment variables.
+Configuration package for Node projects. Define your default configuration settings in YAML files and easily override/extend them using environment-specific files as well as environment variables.
 
-## Installation
+## Get started
 
-```javascript
+```shell
+yarn add make-conf
+# OR
 npm install make-conf --save
+
+mkdir config
+vi config/database.yaml
 ```
 
-## Behavior
+```yaml
+database:
+  username: user
+  password: test
+  hostname: localhost
+```
 
-All keys are converted to camel-case and nested appropriately based on the following rules:
-- Single underscore -> camel-case (e.g. `NODE_ENV` becomes `nodeEnv`)
-- Double underscore -> nested object (e.g. `APP__NAME` becomes `app.name`)
+**Override settings for production (using file)**
 
-After converting keys, values are merged:
-- Objects are merged recursively
-- All other values (e.g. arrays, strings) are replaced
+```shell
+vi config/database.production.yaml
+# OR
+mkdir config/production
+vi config/production/database.yaml
+```
+
+```yaml
+database:
+  hostname: prod-1.us-west-2.rds.amazonaws.com
+```
+
+**Override settings for production (using environment variables)**
+
+```shell
+export DATABASE__HOSTNAME=prod-1.us-west-2.rds.amazonaws.com
+export DATABASE__PASSWORD=prodpass
+```
+
+**Use config values in the app code**
+
+```javascript
+import config from 'make-conf';
+
+database.connect(config.get('database'));
+```
 
 ## Usage
 
-Pass in any config sources to get merged config result.
+This package merges together configuration settings from general YAML-formatted config files, environment-specific YAML-formatted config files, and environment variables (in that order) to create a final application config that can used throughout your code. The environment is determined from the `NODE_ENV` environment variable and defaults to `development` if none is specified.
+
+### Configuration files
+
+Configuration files can be stored in a directory of your choice. The default directory is `./config`, but you can use the `NODE_CONFIG_DIR` environment variable to specify any location. All YAML files contained in the directory will be parsed and merged together, so it is entirely up to you how you want to structure your config files (e.g. a single file or a file per module).
+
+### Environment-specific configuration files
+
+Environment-specific YAML files contained in the config directory will only be merged in if the current environment matches. They can be placed in the root of the config directory and named `{filename}.{env}.yaml`, or they can be placed into a subdirectory `{env}/{filename}.yaml`.
+
+### Environment variables
+
+Environment variables are merged into the configuration after all files are loaded and are type-cast to match the value in the configuration files, if one exists.
+
+#### NODE_CONFIG
+
+The first environment variable that gets merged in is `NODE_CONFIG`, which must be a JSON-formatted string. This single environment variable allows you to override as much or as little of your config as you like.
+
+#### Others
+
+Then, other environment variables are merged in. Names are converted to camelCase and object dot-notation using the following rules: `__` becomes a `.` for nesting and `_` becomes a capital letter. For example, the environment variable `DATABASE__USER_NAME` would override `config.database.userName`.
+
+##### NODE_CONFIG_PREFIX
+
+You can also specify an environment variable prefix that filters the environment variables that get merged in. This is optional, but recommended. The prefix will be stripped when the name is converted for merging. For example, if you have `NODE_CONFIG_PREFIX="APP_"`, only environment variables matching `APP_*` would be merged (e.g. `APP_DATABASE__USER_NAME` -> `config.database.userName`).
+
+### Config
+
+Now that all files and environment variables have been merged together, your config is ready to use throughout your application code. All properties can be accessed directly:
 
 ```javascript
-const makeConf = require('make-conf');
+import config from 'make-conf';
 
-// Using a default object
-const conf = makeConf({ nodeEnv: 'development', appName: 'awesome-app' }, ...configObjects)
+console.log(config.database.userName);
+```
 
-// Using folder of YAML files
-const conf = makeConf({ someKey: 'default' }, ...fs.readdirSync('./config').map(file => yaml.load(fs.readFileSync(path.join('./config', file), 'utf8'))));
+But there are various helper functions on the config class that can make things easier.
 
-// Example
-// Environment variables: NODE_ENV=production APP__VERSION=2.0.0
-const conf = makeConf({ nodeEnv, 'development', app: { name: 'Test', version: '1.0.0' }}, { app: { name: 'makeConf' }});
-// { nodeEnv: 'production', app: { name: 'makeConf', version: '2.0.0' }}
+#### config.environment()
+
+Quickly check if you are running in one or more environments by passing them as arguments to `config.environment`:
+
+```javascript
+import config from 'make-conf';
+
+if (config.environment('development', 'production')) {
+  // Either in development or production environment
+}
+```
+
+#### config.get()
+
+Quickly access config values using dot-notation or return a supplied default value if the key does not exist:
+
+```javascript
+import config from 'make-conf';
+
+config.get('database'); // returns config.database
+config.get('maybe.undefined', 'default_value'); // returns config.maybe.undefined or 'default_value' if undefined
+```
+
+#### config.set()
+
+Easily change config values using dot-notation:
+
+```javascript
+import config from 'make-conf';
+
+config.set('database.userName', 'test');
+config.get('database.userName'); // returns 'test'
 ```
 
 [build-url]: https://travis-ci.org/joshswan/make-conf
