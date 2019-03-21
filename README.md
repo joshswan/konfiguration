@@ -4,7 +4,7 @@
 
 Configuration package for Node projects. Define your default configuration settings in YAML files and easily override/extend them using environment-specific files as well as environment variables.
 
-## Get started
+## Quick start
 
 ```shell
 yarn add make-conf
@@ -51,7 +51,7 @@ import config from 'make-conf';
 database.connect(config.get('database'));
 ```
 
-## Usage
+## About make-conf
 
 This package merges together configuration settings from general YAML-formatted config files, environment-specific YAML-formatted config files, and environment variables (in that order) to create a final application config that can used throughout your code. The environment is determined from the `NODE_ENV` environment variable and defaults to `development` if none is specified.
 
@@ -65,7 +65,7 @@ Environment-specific YAML files contained in the config directory will only be m
 
 ### Environment variables
 
-Environment variables are merged into the configuration after all files are loaded and are type-cast to match the value in the configuration files, if one exists.
+Environment variables are merged into the configuration after all files are loaded. They are type-cast to match the value in the configuration files, if one exists (e.g. if you have `port: 3000` in a config file and an environment variable `PORT=80` will be merged in to the `port` key as `80` despite being `"80"` in `process.env`).
 
 #### NODE_CONFIG
 
@@ -75,11 +75,9 @@ The first environment variable that gets merged in is `NODE_CONFIG`, which must 
 
 Then, other environment variables are merged in. Names are converted to camelCase and object dot-notation using the following rules: `__` becomes a `.` for nesting and `_` becomes a capital letter. For example, the environment variable `DATABASE__USER_NAME` would override `config.database.userName`.
 
-##### NODE_CONFIG_PREFIX
+Optionally, you can also specify an environment variable prefix using `NODE_CONFIG_PREFIX`, which filters the environment variables that will be merged. The prefix will be stripped when the name is converted for merging. For example, if you have `NODE_CONFIG_PREFIX="APP_"`, only environment variables matching `APP_*` would be merged (e.g. `APP_DATABASE__USER_NAME` -> `config.database.userName`).
 
-You can also specify an environment variable prefix that filters the environment variables that get merged in. This is optional, but recommended. The prefix will be stripped when the name is converted for merging. For example, if you have `NODE_CONFIG_PREFIX="APP_"`, only environment variables matching `APP_*` would be merged (e.g. `APP_DATABASE__USER_NAME` -> `config.database.userName`).
-
-### Config
+## Usage
 
 Now that all files and environment variables have been merged together, your config is ready to use throughout your application code. All properties can be accessed directly:
 
@@ -91,7 +89,7 @@ console.log(config.database.userName);
 
 But there are various helper functions on the config class that can make things easier.
 
-#### config.environment()
+### config.environment()
 
 Quickly check if you are running in one or more environments by passing them as arguments to `config.environment`:
 
@@ -103,7 +101,7 @@ if (config.environment('development', 'production')) {
 }
 ```
 
-#### config.get()
+### config.get()
 
 Quickly access config values using dot-notation or return a supplied default value if the key does not exist:
 
@@ -114,7 +112,7 @@ config.get('database'); // returns config.database
 config.get('maybe.undefined', 'default_value'); // returns config.maybe.undefined or 'default_value' if undefined
 ```
 
-#### config.set()
+### config.set()
 
 Easily change config values using dot-notation:
 
