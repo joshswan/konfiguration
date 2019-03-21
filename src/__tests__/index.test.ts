@@ -1,9 +1,9 @@
 /*!
- * make-conf
+ * konfiguration
  *
  * Copyright 2017-2019 Josh Swan
  * Released under the MIT license
- * https://github.com/joshswan/make-conf/blob/master/LICENSE
+ * https://github.com/joshswan/konfiguration/blob/master/LICENSE
  */
 
 import path from 'path';

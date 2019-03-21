@@ -1,4 +1,4 @@
-# make-conf
+# konfiguration
 
 [![NPM Version][npm-image]][npm-url] [![Build Status][build-image]][build-url] [![Dependency Status][depstat-image]][depstat-url] [![Dev Dependency Status][devdepstat-image]][devdepstat-url]
 
@@ -7,9 +7,9 @@ Configuration package for Node projects. Define your default configuration setti
 ## Quick start
 
 ```shell
-yarn add make-conf
+yarn add konfiguration
 # OR
-npm install make-conf --save
+npm install konfiguration --save
 
 mkdir config
 vi config/database.yaml
@@ -46,12 +46,12 @@ export DATABASE__PASSWORD=prodpass
 **Use config values in the app code**
 
 ```javascript
-import config from 'make-conf';
+import config from 'konfiguration';
 
 database.connect(config.get('database'));
 ```
 
-## About make-conf
+## About konfiguration
 
 This package merges together configuration settings from general YAML-formatted config files, environment-specific YAML-formatted config files, and environment variables (in that order) to create a final application config that can used throughout your code. The environment is determined from the `NODE_ENV` environment variable and defaults to `development` if none is specified.
 
@@ -82,7 +82,7 @@ Optionally, you can also specify an environment variable prefix using `NODE_CONF
 Now that all files and environment variables have been merged together, your config is ready to use throughout your application code. All properties can be accessed directly:
 
 ```javascript
-import config from 'make-conf';
+import config from 'konfiguration';
 
 console.log(config.database.userName);
 ```
@@ -94,7 +94,7 @@ But there are various helper functions on the config class that can make things 
 Quickly check if you are running in one or more environments by passing them as arguments to `config.environment`:
 
 ```javascript
-import config from 'make-conf';
+import config from 'konfiguration';
 
 if (config.environment('development', 'production')) {
   // Either in development or production environment
@@ -106,7 +106,7 @@ if (config.environment('development', 'production')) {
 Quickly access config values using dot-notation or return a supplied default value if the key does not exist:
 
 ```javascript
-import config from 'make-conf';
+import config from 'konfiguration';
 
 config.get('database'); // returns config.database
 config.get('maybe.undefined', 'default_value'); // returns config.maybe.undefined or 'default_value' if undefined
@@ -117,17 +117,17 @@ config.get('maybe.undefined', 'default_value'); // returns config.maybe.undefine
 Easily change config values using dot-notation:
 
 ```javascript
-import config from 'make-conf';
+import config from 'konfiguration';
 
 config.set('database.userName', 'test');
 config.get('database.userName'); // returns 'test'
 ```
 
-[build-url]: https://travis-ci.org/joshswan/make-conf
-[build-image]: https://travis-ci.org/joshswan/make-conf.svg?branch=master
-[depstat-url]: https://david-dm.org/joshswan/make-conf
-[depstat-image]: https://david-dm.org/joshswan/make-conf.svg
-[devdepstat-url]: https://david-dm.org/joshswan/make-conf#info=devDependencies
-[devdepstat-image]: https://david-dm.org/joshswan/make-conf/dev-status.svg
-[npm-url]: https://www.npmjs.com/package/make-conf
-[npm-image]: https://badge.fury.io/js/make-conf.svg
+[build-url]: https://travis-ci.org/joshswan/konfiguration
+[build-image]: https://travis-ci.org/joshswan/konfiguration.svg?branch=master
+[depstat-url]: https://david-dm.org/joshswan/konfiguration
+[depstat-image]: https://david-dm.org/joshswan/konfiguration.svg
+[devdepstat-url]: https://david-dm.org/joshswan/konfiguration#info=devDependencies
+[devdepstat-image]: https://david-dm.org/joshswan/konfiguration/dev-status.svg
+[npm-url]: https://www.npmjs.com/package/konfiguration
+[npm-image]: https://badge.fury.io/js/konfiguration.svg

@@ -1,10 +1,11 @@
 {
-  "name": "make-conf",
-  "version": "0.1.1",
-  "description": "Merge environment variables into config object",
-  "main": "index.js",
+  "name": "konfiguration",
+  "version": "1.0.0",
+  "description": "Create config from config files and environment variables",
+  "main": "dist/index.js",
   "keywords": [
     "config",
+    "configuration",
     "env",
     "environment",
     "merge"
@@ -13,12 +14,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/joshswan/make-conf"
+    "url": "https://github.com/joshswan/konfiguration"
   },
   "bugs": {
-    "url": "https://github.com/joshswan/make-conf/issues"
+    "url": "https://github.com/joshswan/konfiguration/issues"
   },
-  "homepage": "https://github.com/joshswan/make-conf#readme",
+  "homepage": "https://github.com/joshswan/konfiguration#readme",
   "files": [
     "dist/",
     "LICENSE",
