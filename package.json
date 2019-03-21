@@ -27,6 +27,7 @@
   ],
   "scripts": {
     "build": "tsc",
+    "coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "lint": "eslint src --ext .js,.ts && tsc --noEmit",
     "test": "NODE_ENV=test nyc mocha --require ts-node/register --require test/setup.test.js --recursive src/**/*.test.ts"
   },
@@ -47,6 +48,7 @@
     "@typescript-eslint/eslint-plugin": "^1.4.2",
     "@typescript-eslint/parser": "^1.4.2",
     "chai": "^4.2.0",
+    "coveralls": "^3.0.3",
     "eslint": "^5.15.3",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
@@ -75,6 +77,7 @@
       "ts-node/register"
     ],
     "reporter": [
+      "lcov",
       "text"
     ],
     "sourceMap": true,
