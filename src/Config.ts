@@ -74,7 +74,7 @@ class Config {
   constructor() {
     // eslint-disable-next-line no-multi-assign
     this.ENV = this.getEnv('NODE_ENV', 'development');
-    this.dir = this.getEnv('NODE_CONFIG_DIR', path.join(process.cwd(), 'config'));
+    this.dir = this.getEnv('NODE_CONFIG_DIR', path.resolve(this.getEnv('INIT_CWD', process.cwd()), 'config'));
     this.prefix = this.getEnv('NODE_CONFIG_PREFIX', '').toUpperCase();
 
     this.loadFiles();
@@ -125,12 +125,7 @@ class Config {
   }
 
   private loadEnv(): void {
-    const dotenvPath = [
-      path.resolve(process.cwd(), '.env'),
-      path.resolve(this.getEnv('INIT_CWD', process.cwd()), '.env'),
-    ].find(fs.existsSync);
-
-    dotenv.config({ path: dotenvPath });
+    dotenv.config({ path: path.resolve(this.getEnv('INIT_CWD', process.cwd()), '.env') });
 
     let env = {};
 
