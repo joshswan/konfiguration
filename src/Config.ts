@@ -125,7 +125,12 @@ class Config {
   }
 
   private loadEnv(): void {
-    dotenv.config();
+    const dotenvPath = [
+      path.resolve(process.cwd(), '.env'),
+      path.resolve(this.getEnv('INIT_CWD', process.cwd()), '.env'),
+    ].find(fs.existsSync);
+
+    dotenv.config({ path: dotenvPath });
 
     let env = {};
 
