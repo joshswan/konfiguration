@@ -10,7 +10,12 @@ import fs from 'fs';
 import path from 'path';
 import dotenv from 'dotenv';
 import yaml from 'js-yaml';
-import { camelCase, get, set } from 'lodash';
+import {
+  camelCase,
+  get,
+  isObjectLike,
+  set,
+} from 'lodash';
 
 interface EnvVars {
   [key: string]: any;
@@ -30,7 +35,7 @@ function convert(value: any, type: string): any {
 }
 
 function isObject(value: any): boolean {
-  return typeof value === 'object' && !Array.isArray(value);
+  return isObjectLike(value) && !Array.isArray(value);
 }
 
 function reduce(destination: object, source: EnvVars): EnvVars {
