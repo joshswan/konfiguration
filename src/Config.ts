@@ -38,9 +38,9 @@ function isObject(value: any): boolean {
   return isObjectLike(value) && !Array.isArray(value);
 }
 
-function reduce(destination: object, source: EnvVars): EnvVars {
+function reduce(destination: Record<string, any>, source: EnvVars): EnvVars {
   // Reduce source object keys, using destination as initial value
-  return Object.keys(source).reduce((reduced: object, sourceKey: string) => {
+  return Object.keys(source).reduce((reduced: Record<string, any>, sourceKey: string) => {
     // Create config key
     const key = sourceKey
       // Remove non-word characters
@@ -50,7 +50,7 @@ function reduce(destination: object, source: EnvVars): EnvVars {
       // Remove empty values
       .filter(Boolean)
       // Convert keys to camel-case
-      .map(str => camelCase(str))
+      .map((str) => camelCase(str))
       // Convert to single string with dot notation
       .join('.');
 
@@ -115,18 +115,18 @@ class Config {
       if (!fs.existsSync(dir)) return [];
 
       return fs.readdirSync(dir)
-        .filter(file => /\.(yml|yaml)$/.test(file))
-        .filter(file => !/\w*\.\w*\./.test(file) || file.includes(suffix))
+        .filter((file) => /\.(yml|yaml)$/.test(file))
+        .filter((file) => !/\w*\.\w*\./.test(file) || file.includes(suffix))
         .sort((a, b) => {
           if (!a.includes(suffix) && b.includes(suffix)) return -1;
           if (a.includes(suffix) && !b.includes(suffix)) return 1;
           return 0;
         })
-        .map(file => path.resolve(dir, file));
+        .map((file) => path.resolve(dir, file));
     }).reduce((a, b) => a.concat(b));
 
     // Parse files and merge into config
-    Object.assign(this, files.map(file => yaml.load(fs.readFileSync(file, 'utf8'))).filter(Boolean).reduce(reduce, {}));
+    Object.assign(this, files.map((file) => yaml.load(fs.readFileSync(file, 'utf8'))).filter(Boolean).reduce(reduce, {}));
   }
 
   private loadEnv(): void {

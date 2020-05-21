@@ -29,61 +29,77 @@
   "scripts": {
     "build": "tsc",
     "coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "lint": "eslint src --ext .js,.ts && tsc --noEmit",
-    "prepublishOnly": "rimraf dist && yarn run build",
-    "test": "NODE_ENV=test nyc mocha --require ts-node/register --require test/setup.test.js --recursive src/**/*.test.ts"
+    "lint": "tsc --noEmit && eslint src --ext .js,.ts",
+    "release": "release-it",
+    "test": "jest --coverage"
   },
   "dependencies": {
-    "dotenv": "^7.0.0",
-    "js-yaml": "^3.12.2",
-    "lodash": "^4.17.11"
+    "dotenv": "^8.2.0",
+    "js-yaml": "^3.13.1",
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "@types/chai": "^4.1.7",
-    "@types/dotenv": "^6.1.0",
-    "@types/js-yaml": "^3.12.0",
-    "@types/lodash": "^4.14.123",
-    "@types/mocha": "^5.2.6",
-    "@types/node": "^11.11.3",
-    "@types/sinon": "^7.0.10",
-    "@types/sinon-chai": "^3.2.2",
-    "@typescript-eslint/eslint-plugin": "^1.4.2",
-    "@typescript-eslint/parser": "^1.4.2",
-    "chai": "^4.2.0",
-    "coveralls": "^3.0.3",
-    "eslint": "^5.15.3",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "mocha": "^6.0.2",
-    "nyc": "^13.3.0",
-    "rimraf": "^2.6.3",
-    "sinon": "^7.3.0",
-    "sinon-chai": "^3.3.0",
-    "ts-node": "^8.0.3",
-    "typescript": "^3.3.3333"
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-typescript": "^7.9.0",
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@release-it/conventional-changelog": "^1.1.4",
+    "@types/jest": "^25.2.3",
+    "@types/js-yaml": "^3.12.4",
+    "@types/lodash": "^4.14.152",
+    "@types/node": "^12.12.39",
+    "@typescript-eslint/eslint-plugin": "^3.0.0",
+    "@typescript-eslint/parser": "^3.0.0",
+    "babel-jest": "^26.0.1",
+    "coveralls": "^3.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "husky": "^4.2.5",
+    "jest": "^26.0.1",
+    "jest-junit": "^10.0.0",
+    "release-it": "^13.6.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.9.3"
   },
-  "nyc": {
-    "include": [
-      "src/**/*.js",
-      "src/**/*.ts"
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "<rootDir>/src/**/*.{js,ts}"
     ],
-    "exclude": [
-      "src/**/*.test.js",
-      "src/**/*.d.ts",
-      "src/**/*.test.ts"
-    ],
-    "extension": [
-      ".js",
-      ".ts"
-    ],
-    "require": [
-      "ts-node/register"
-    ],
-    "reporter": [
-      "lcov",
-      "text"
-    ],
-    "sourceMap": true,
-    "instrument": true
+    "restoreMocks": true,
+    "roots": [
+      "<rootDir>/src"
+    ]
+  },
+  "jest-junit": {
+    "outputDirectory": "./artifacts/jest",
+    "outputName": "results.xml"
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true,
+      "releaseName": "${version}"
+    },
+    "hooks": {
+      "after:bump": "rimraf dist && yarn build"
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "conventionalcommits"
+      }
+    }
   }
 }

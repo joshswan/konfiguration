@@ -21,14 +21,21 @@
   "rules": {
     "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
     "no-param-reassign": ["error", { "props": false }],
+    "import/extensions": ["error", {
+      ".js": "never",
+      ".ts": "never"
+    }],
     "@typescript-eslint/explicit-member-accessibility": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/indent": ["error", 2],
     "@typescript-eslint/no-explicit-any": "off"
   },
   "overrides": [
     {
       "files": ["*.test.js", "*.test.ts"],
-      "env": { "mocha": true },
+      "env": {
+        "jest": true
+      },
       "rules": {
         "no-unused-expressions": "off",
         "@typescript-eslint/no-non-null-assertion": "off",
