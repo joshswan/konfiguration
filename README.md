@@ -1,6 +1,6 @@
 # konfiguration
 
-[![NPM Version][npm-image]][npm-url] [![Build Status][build-image]][build-url] [![Coverage Status][coverage-image]][coverage-url] [![Dependency Status][depstat-image]][depstat-url] [![Dev Dependency Status][devdepstat-image]][devdepstat-url]
+[![Version][version-image]][package-url] [![Build Status][build-image]][build-url] [![Coverage][coverage-image]][coverage-url] [![License][license-image]][license-url]
 
 Configuration package for Node projects. Define your default configuration settings in YAML files and easily override/extend them using environment-specific files as well as environment variables.
 
@@ -123,13 +123,11 @@ config.set('database.userName', 'test');
 config.get('database.userName'); // returns 'test'
 ```
 
-[build-url]: https://travis-ci.org/joshswan/konfiguration
-[build-image]: https://travis-ci.org/joshswan/konfiguration.svg?branch=master
-[coverage-url]: https://coveralls.io/github/joshswan/konfiguration?branch=master
-[coverage-image]: https://coveralls.io/repos/github/joshswan/konfiguration/badge.svg?branch=master
-[depstat-url]: https://david-dm.org/joshswan/konfiguration
-[depstat-image]: https://david-dm.org/joshswan/konfiguration.svg
-[devdepstat-url]: https://david-dm.org/joshswan/konfiguration#info=devDependencies
-[devdepstat-image]: https://david-dm.org/joshswan/konfiguration/dev-status.svg
-[npm-url]: https://www.npmjs.com/package/konfiguration
-[npm-image]: https://badge.fury.io/js/konfiguration.svg
+[build-image]: https://img.shields.io/circleci/build/github/joshswan/konfiguration?style=flat-square
+[build-url]: https://circleci.com/gh/joshswan/konfiguration
+[coverage-image]: https://img.shields.io/coveralls/github/joshswan/konfiguration?style=flat-square
+[coverage-url]: https://coveralls.io/github/joshswan/konfiguration
+[license-image]: https://img.shields.io/npm/l/konfiguration?color=blue&style=flat-square
+[license-url]: https://github.com/joshswan/konfiguration/blob/master/LICENSE
+[package-url]: https://www.npmjs.com/package/konfiguration
+[version-image]: https://img.shields.io/npm/v/konfiguration?style=flat-square
